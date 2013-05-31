@@ -31,7 +31,7 @@ class TestPiplAPIRequest < Minitest::Test
   end
 
   def test_uri
-    expected = "http://api.pipl.com/foo/v2/json"
+    expected = "http://api.pipl.com/foo/v2/json/"
     actual = @request.uri
     assert_equal(expected, actual)
   end
