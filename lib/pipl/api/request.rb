@@ -29,10 +29,6 @@ module Pipl
       def protocol
          "#{@protocol}://"
       end
-
-      def parameters
-        Pipl::API.api_key ? @parameters.merge(key: Pipl::API.api_key) : @parameters
-      end
     end
   end
 end
