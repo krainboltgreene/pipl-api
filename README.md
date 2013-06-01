@@ -8,7 +8,9 @@ Pipl API
   - [![Coverage Status](https://coveralls.io/repos/krainboltgreene/pipl-api/badge.png?branch=master)](https://coveralls.io/r/krainboltgreene/pipl-api)
 
 
-TODO: Write a gem description
+The `pipl-api` is an interface for interacting with the pipl.com service.
+It makes requests and generates the response as an object.
+
 
 Using Pipl API
 ==============
