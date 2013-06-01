@@ -37,9 +37,7 @@ class TestPiplAPIRequest < Minitest::Test
   end
 
   def test_call
-    get = MiniTest::Mock.new
-    get.expect :call!, "foo", [{}]
-    Pipl::API::Request::Get.stub :new, get do
+    RestClient.stub :get, "foo" do
       expected = "foo"
       actual = @request.call("get")
       assert_equal(expected, actual)
