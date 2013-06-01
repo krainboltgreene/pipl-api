@@ -15,11 +15,10 @@ It makes requests and generates the response as an object.
 Using Pipl API
 ==============
 
-There are 3 endpoints to the Pipl API:
+There are 2 endpoints to the Pipl API:
 
-  * Search
-  * Name
-  * ...
+  * Name: Get metadata on a name
+  * Search (Not yet ready)
 
 For an example of using the name endpoint read below:
 
@@ -28,8 +27,12 @@ require "pipl-api"
 
 client = Pipl::Client.new(ENV["PIPL_API_KEY"])
 
-client.name("Kurtis Rainbolt-Greene")
+client.name("James T. Kirk")
+
+response.person.gender.to_hash #=> { :code => "male", :estimate => 0.9 }
 ```
+
+You may have noticed that in order to use the Pipl API you need an API key.
 
 
 Installing Pipl API
@@ -37,7 +40,7 @@ Installing Pipl API
 
 Add this line to your application's Gemfile:
 
-    gem "pipl-api", "~> 1.0"
+    gem "pipl-api", "~> 2.0"
 
 And then execute:
 
