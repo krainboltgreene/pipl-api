@@ -1,5 +1,4 @@
 require_relative "request/name"
-require_relative "request/get"
 
 module Pipl
   module API
@@ -19,7 +18,7 @@ module Pipl
       end
 
       def call(verb)
-        self.class.const_get(verb.capitalize).new(uri).call!(parameters)
+        RestClient.send(verb, uri, params: @parameters)
       end
 
       def uri
