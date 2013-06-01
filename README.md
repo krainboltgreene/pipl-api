@@ -15,7 +15,21 @@ It makes requests and generates the response as an object.
 Using Pipl API
 ==============
 
-TODO: Write usage instructions here
+There are 3 endpoints to the Pipl API:
+
+  * Search
+  * Name
+  * ...
+
+For an example of using the name endpoint read below:
+
+``` ruby
+require "pipl-api"
+
+client = Pipl::Client.new(ENV["PIPL_API_KEY"])
+
+client.name("Kurtis Rainbolt-Greene")
+```
 
 
 Installing Pipl API
