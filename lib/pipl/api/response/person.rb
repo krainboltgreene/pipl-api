@@ -14,37 +14,45 @@ module Pipl
 
         def initialize(data)
           @name = Name.new(data["name"])
-          @full_names = Name.new(data["full_names"]) unless data["full_names"] == {}
-          @nicknames = Name.new(data["nicknames"]) unless data["nicknames"] == {}
-          @spellings = Name.new(data["spellings"]) unless data["spellings"] == {}
-          @translations = data["translations"] unless data["translations"] == {}
+          @full_names = convert_names(data["full_names"])
+          @nicknames = convert_names(data["nicknames"])
+          @spellings = convert_names(data["spellings"])
+          @translations = convert_names(data["translations"])
           @gender = Gender.new(data["gender"])
-          @locations = data["top_locations"].map { |location| Location.new(location) }
-          @ages = data["top_ages"].map { |age| Age.new(age) }
+          @locations = convert_locations(data["top_locations"])
+          @ages = convert_locations(data["top_ages"])
           @estimated_world_persons_count = data["estimated_world_persons_count"]
         end
 
         def to_hash
-          [
-            :name, :full_names, :nicknames,
-            :spellings, :translations, :gender,
-            :locations, :ages, :estimated_world_persons_count
-          ].map do |accessor|
-            value = case send(accessor)
-              when Array then send(accessor).map(&:to_hash) if send(accessor).any?
-              when Integer then send(accessor) if send(accessor)
-              else send(accessor).to_hash if send(accessor)
-            end
-            { accessor => value }
-          end.inject(&:merge!)
+          {
+            name: name.to_hash,
+            full_names: full_names.map(&:to_hash),
+            nicknames: nicknames.map(&:to_hash),
+            spellings: spellings.map(&:to_hash),
+            translations: translations.map(&:to_hash),
+            gender: gender.to_hash,
+            locations: locations.map(&:to_hash),
+            ages: ages.map(&:to_hash),
+            estimated_world_persons_count: estimated_world_persons_count
+          }
         end
         alias_method :to_h, :to_hash
 
-
         private
 
-        def nil_or_hash(subject)
-          subject.to_hash if subject
+        def convert_names(list)
+          list.map do |part, names|
+            names.map { |name| Name.new(part => name) }
+          end.flatten
+        end
+
+        def convert_locations(list)
+          list.map { |location| Location.new(location) }
+        end
+
+        def convert_ages(list)
+          list.map { |age| Age.new(age) }
         end
       end
     end
