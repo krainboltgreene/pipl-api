@@ -7,7 +7,7 @@ module Pipl
 
         def initialize(location)
           @code = location["country"]
-          if location["display"].include?(",")
+          if location["display"] && location["display"].include?(",")
             @state = location["display"].split(", ").first
             @country = location["display"].split(", ").last
           else

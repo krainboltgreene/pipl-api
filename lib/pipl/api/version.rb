@@ -1,5 +1,5 @@
 module Pipl
   module API
-    VERSION = "3.0.0"
+    VERSION = "3.0.1"
   end
 end
