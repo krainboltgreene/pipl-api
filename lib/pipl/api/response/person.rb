@@ -25,19 +25,27 @@ module Pipl
         end
 
         def to_hash
-          {
-            name: name.to_hash,
-            full_names: full_names.to_hash,
-            nicknames: nicknames.to_hash,
-            spellings: spellings.to_hash,
-            translations: translations,
-            gender: gender.to_hash,
-            locations: locations.map(&:to_hash),
-            ages: ages.map(&:to_hash),
-            estimated_world_persons_count: estimated_world_persons_count
-          }
+          [
+            :name, :full_names, :nicknames,
+            :spellings, :translations, :gender,
+            :locations, :ages, :estimated_world_persons_count
+          ].each do |accessor|
+            value = case send(accessor)
+              when Array then send(accessor).map(&:to_hash) if send(accessor).any?
+              when Integer then send(accessor) if send(accessor)
+              else send(accessor).to_hash if send(accessor)
+            end
+            { accessor => value }
+          end.inject(&:merge!)
         end
         alias_method :to_h, :to_hash
+
+
+        private
+
+        def nil_or_hash(subject)
+          subject.to_hash if subject
+        end
       end
     end
   end
