@@ -29,7 +29,7 @@ module Pipl
             :name, :full_names, :nicknames,
             :spellings, :translations, :gender,
             :locations, :ages, :estimated_world_persons_count
-          ].each do |accessor|
+          ].map do |accessor|
             value = case send(accessor)
               when Array then send(accessor).map(&:to_hash) if send(accessor).any?
               when Integer then send(accessor) if send(accessor)
